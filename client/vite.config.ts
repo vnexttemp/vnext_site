@@ -16,7 +16,7 @@ export default defineConfig({
   },
   build: {
     // This will build the output into 'client/dist', which is standard for Vite & Vercel
-    outDir: "dist",
+    outDir: "dist/public",
     emptyOutDir: true,
   },
   server: {
