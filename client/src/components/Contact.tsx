@@ -20,9 +20,11 @@ export default function Contact({ showHeader = true }: { showHeader?: boolean })
   });
   const { toast } = useToast();
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const contactMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      const response = await fetch("http://127.0.0.1:3000/send-email", {
+      const response = await fetch(`${API_BASE_URL}/send-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
