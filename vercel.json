@@ -1,13 +1,5 @@
 {
-  "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "NODE_ENV=production vite build",
   "outputDirectory": "dist/public",
-  "installCommand": "npm install",
-  "framework": null,
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "installCommand": "npm install"
 }
