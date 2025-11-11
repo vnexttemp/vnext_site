@@ -10,34 +10,61 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# --- THE DEFINITIVE CORS CONFIGURATION ---
-CORS(app, origins=[
-    "https://vnext-site.vercel.app",
-    "https://vnext-site-id9o0p1aa-haris-projects-41e8cc7f.vercel.app",
-    "http://localhost:5173"
-])
+# ============================================
+# CORS Configuration - Allow all Vercel deployments
+# ============================================
+CORS(app, 
+     resources={
+         r"/*": {
+             "origins": "*",  # Allow all origins temporarily
+             "methods": ["GET", "POST", "OPTIONS"],
+             "allow_headers": ["Content-Type", "Authorization"],
+             "expose_headers": ["Content-Type"],
+             "supports_credentials": False,
+             "max_age": 3600
+         }
+     }
+)
 
-# --- ✅ Global handler for CORS preflight requests ---
-@app.before_request
-def handle_preflight():
-    if request.method == "OPTIONS":
-        response = app.make_default_options_response()
-        headers = response.headers
+# ============================================
+# Handle ALL requests - add CORS headers
+# ============================================
+@app.after_request
+def after_request(response):
+    origin = request.headers.get('Origin')
+    
+    # Allow any Vercel deployment or localhost
+    if origin and ('vercel.app' in origin or 'localhost' in origin):
+        response.headers['Access-Control-Allow-Origin'] = origin
+    else:
+        response.headers['Access-Control-Allow-Origin'] = '*'
+    
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Max-Age'] = '3600'
+    
+    return response
 
-        # Allow the actual origin that made the request
-        origin = request.headers.get("Origin", "")
-        if origin and (
-            origin.startswith("https://vnext-site-")
-            or origin == "https://vnext-site.vercel.app"
-            or origin.startswith("http://localhost")
-        ):
-            headers["Access-Control-Allow-Origin"] = origin
-
-        headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
-        headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-        headers["Access-Control-Max-Age"] = "3600"
-
-        return response
+# ============================================
+# Explicit OPTIONS handler for preflight
+# ============================================
+@app.route('/<path:path>', methods=['OPTIONS'])
+def handle_options(path):
+    origin = request.headers.get('Origin')
+    
+    response = jsonify({'status': 'ok'})
+    response.status_code = 200
+    
+    if origin and ('vercel.app' in origin or 'localhost' in origin):
+        response.headers['Access-Control-Allow-Origin'] = origin
+    else:
+        response.headers['Access-Control-Allow-Origin'] = '*'
+    
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Max-Age'] = '3600'
+    
+    return response
 
 
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
