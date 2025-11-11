@@ -11,18 +11,18 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
     },
     {
-      "src": "/((?!api|_next/static|_next/image|favicon.ico).*)",
-      "dest": "/client/dist/$1"
+      "source": "/((?!api|_next/static|_next/image|favicon.ico).*)",
+      "destination": "/client/dist/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "/client/dist/index.html"
+      "source": "/(.*)",
+      "destination": "/client/dist/index.html"
     }
   ],
   "headers": [
