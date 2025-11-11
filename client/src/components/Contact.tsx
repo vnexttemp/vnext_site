@@ -245,11 +245,33 @@ export default function Contact({ showHeader = true }: { showHeader?: boolean })
                 <CardTitle data-testid="text-location-title">Our Location</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                    <p className="text-muted-foreground">Interactive Map</p>
-                    <p className="text-sm text-muted-foreground">Kukatpally, Hyderabad</p>
+                <div className="rounded-xl overflow-hidden shadow-lg border border-muted">
+                  {/* Google Map Embed */}
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3805.329344114383!2d78.39108657516734!3d17.49178498341331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTfCsDI5JzMwLjQiTiA3OMKwMjMnMzcuMiJF!5e0!3m2!1sen!2sin!4v1762849321027!5m2!1sen!2sin"
+                    width="100%"
+                    height="350"
+                    style={{ border: 0 }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+
+                  {/* Label below map */}
+                  <div className="p-4 bg-muted/40 text-center">
+                    <h4 className="font-semibold text-lg">V NEXT</h4>
+                    <p className="text-sm text-muted-foreground">
+                      8th Floor, Manjeera Majestic Commercial,<br />
+                      JNTU-Hitech City Road, Kukatpally, Hyderabad - 500015
+                    </p>
+                    <a
+                      href="https://www.google.com/maps/dir/?api=1&destination=V+NEXT+Synergy+Solutions,+Manjeera+Majestic+Commercial,+Kukatpally"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary font-medium hover:underline mt-2 inline-block"
+                    >
+                      📍 Get Directions
+                    </a>
                   </div>
                 </div>
               </CardContent>
@@ -267,8 +289,9 @@ export default function Contact({ showHeader = true }: { showHeader?: boolean })
                   variant="secondary" 
                   className="w-full"
                   data-testid="button-schedule-consultation"
-                  onClick={() => console.log('Schedule consultation clicked')}
+                  onClick={() => window.location.href = "tel:8074010081"}
                 >
+                  <Phone className="mr-2 w-5 h-5" />
                   Schedule Free Consultation
                 </Button>
               </CardContent>
