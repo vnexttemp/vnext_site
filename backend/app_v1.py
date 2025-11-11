@@ -5,22 +5,37 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 from dotenv import load_dotenv
+import re
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 # Allow frontend to call backend
+# --- The Complete & Final CORS Configuration ---
+
+# 1. Your main production URL on Vercel (without the random string)
+PRODUCTION_ORIGIN = "https://vnext-site.vercel.app"
+
+# 2. A regular expression that matches all your Vercel preview URLs.
+# It looks for URLs starting with "https://vnext-site-" and ending in ".vercel.app"
+PREVIEW_ORIGIN_REGEX = re.compile(r"https://vnext-site-.*\.vercel\.app")
+
+# 3. Your local development server URL
+LOCAL_ORIGIN = "http://localhost:5173"
+
+# Apply the CORS configuration
 cors = CORS(app, resources={
   r"/*": {
     "origins": [
-      "https://vnext-site.vercel.app", 
-      "http://localhost:5173" # allow local dev server
+        PRODUCTION_ORIGIN,
+        PREVIEW_ORIGIN_REGEX,
+        LOCAL_ORIGIN
     ]
   }
 })
 
-SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")  # example
+SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
 SMTP_USER = os.getenv("SMTP_USER", "yourmail@example.com")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "yourpassword")
