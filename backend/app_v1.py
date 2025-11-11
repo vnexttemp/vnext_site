@@ -24,12 +24,21 @@ def handle_preflight():
         response = app.make_default_options_response()
         headers = response.headers
 
-        headers["Access-Control-Allow-Origin"] = request.headers.get("Origin", "*")
+        # Allow the actual origin that made the request
+        origin = request.headers.get("Origin", "")
+        if origin and (
+            origin.startswith("https://vnext-site-")
+            or origin == "https://vnext-site.vercel.app"
+            or origin.startswith("http://localhost")
+        ):
+            headers["Access-Control-Allow-Origin"] = origin
+
         headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
         headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
         headers["Access-Control-Max-Age"] = "3600"
 
         return response
+
 
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
