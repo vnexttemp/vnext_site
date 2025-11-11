@@ -5,35 +5,31 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 from dotenv import load_dotenv
-import re
 
-# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
-# Allow frontend to call backend
-# --- The Complete & Final CORS Configuration ---
 
-# 1. Your main production URL on Vercel (without the random string)
-PRODUCTION_ORIGIN = "https://vnext-site.vercel.app"
+# --- THE DEFINITIVE CORS CONFIGURATION ---
+CORS(app, origins=[
+    "https://vnext-site.vercel.app",
+    "https://vnext-site-id9o0p1aa-haris-projects-41e8cc7f.vercel.app",
+    "http://localhost:5173"
+])
 
-# 2. A regular expression that matches all your Vercel preview URLs.
-# It looks for URLs starting with "https://vnext-site-" and ending in ".vercel.app"
-PREVIEW_ORIGIN_REGEX = re.compile(r"https://vnext-site-.*\.vercel\.app")
+# --- ✅ Global handler for CORS preflight requests ---
+@app.before_request
+def handle_preflight():
+    if request.method == "OPTIONS":
+        response = app.make_default_options_response()
+        headers = response.headers
 
-# 3. Your local development server URL
-LOCAL_ORIGIN = "http://localhost:5173"
+        headers["Access-Control-Allow-Origin"] = request.headers.get("Origin", "*")
+        headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        headers["Access-Control-Max-Age"] = "3600"
 
-# Apply the CORS configuration
-cors = CORS(app, resources={
-  r"/*": {
-    "origins": [
-        PRODUCTION_ORIGIN,
-        PREVIEW_ORIGIN_REGEX,
-        LOCAL_ORIGIN
-    ]
-  }
-})
+        return response
 
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
