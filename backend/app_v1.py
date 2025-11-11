@@ -10,7 +10,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Allow frontend to call backend
+# Allow frontend to call backend
+cors = CORS(app, resources={
+  r"/*": {
+    "origins": [
+      "https://vnext-site.vercel.app", 
+      "http://localhost:5173" # allow local dev server
+    ]
+  }
+})
 
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")  # example
 SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
