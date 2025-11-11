@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, TrendingUp, ArrowLeft, Phone } from "lucide-react";
-import franchiseImage from "@assets/generated_images/Franchise_distribution_support_1298d33b.png";
+import franchiseImage from "@/assets/generated_images/Franchise_distribution_support_1298d33b.png";
 import { useState } from "react";
 import DiscussRequirementsModal from "@/components/DiscussRequirementsModal";
 

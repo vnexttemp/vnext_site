@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import heroImage from "@assets/generated_images/Professional_corporate_office_hero_edcad770.png";
+import heroImage from "@/assets/generated_images/Professional_corporate_office_hero_edcad770.png";
 import { useState } from "react";
 import GetQuoteModal from "@/components/GetQuoteModal";
 

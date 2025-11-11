@@ -3,9 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Package, Users, TrendingUp, CheckCircle, ArrowRight } from "lucide-react";
-import inventoryImage from "@assets/generated_images/Inventory_solutions_workspace_7c67174e.png";
-import manpowerImage from "@assets/generated_images/Manpower_solutions_team_e8f215f8.png";
-import franchiseImage from "@assets/generated_images/Franchise_distribution_support_1298d33b.png";
+import inventoryImage from "@/assets/generated_images/Inventory_solutions_workspace_7c67174e.png";
+import manpowerImage from "@/assets/generated_images/Manpower_solutions_team_e8f215f8.png";
+import franchiseImage from "@/assets/generated_images/Franchise_distribution_support_1298d33b.png";
 
 const services = [
   {

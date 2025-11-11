@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Package, ArrowLeft, Phone } from "lucide-react";
-import inventoryImage from "@assets/generated_images/Inventory_solutions_workspace_7c67174e.png";
+import inventoryImage from "@/assets/generated_images/Inventory_solutions_workspace_7c67174e.png";
 import { useState } from "react";
 import DiscussRequirementsModal from "@/components/DiscussRequirementsModal";
 

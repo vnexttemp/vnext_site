@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Users, ArrowLeft, Phone } from "lucide-react";
-import manpowerImage from "@assets/generated_images/Manpower_solutions_team_e8f215f8.png";
+import manpowerImage from "@/assets/generated_images/Manpower_solutions_team_e8f215f8.png";
 import { useState } from "react";
 import DiscussRequirementsModal from "@/components/DiscussRequirementsModal";
 
