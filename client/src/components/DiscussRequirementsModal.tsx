@@ -1,77 +1,3 @@
-// import { useState } from "react";
-// import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Textarea } from "@/components/
-//ui/textarea";
-// import { useToast } from "@/hooks/use-toast";
-
-// export default function DiscussRequirementsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-//   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
-//   const { toast } = useToast();
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//     const { name, value } = e.target;
-//     setFormData(prev => ({ ...prev, [name]: value }));
-//   };
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     try {
-//       const res = await fetch("http://127.0.0.1:3000/send-requirements", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(formData),
-//       });
-//       const data = await res.json();
-
-//       if (data.success) {
-//         toast({
-//           title: "Submitted!",
-//           description: "Thank you! We’ll get in touch with you soon.",
-//         });
-//         setFormData({ name: "", email: "", phone: "", message: "" });
-//         onClose();
-//       } else {
-//         toast({
-//           title: "Error",
-//           description: data.error || "Failed to send. Try again.",
-//           variant: "destructive",
-//         });
-//       }
-//     } catch {
-//       toast({
-//         title: "Error",
-//         description: "Network issue. Please try again later.",
-//         variant: "destructive",
-//       });
-//     }
-//   };
-
-//   return (
-//     <Dialog open={open} onOpenChange={onClose}>
-//       <DialogContent className="max-w-md">
-//         <DialogHeader>
-//           <DialogTitle>Discuss Your Requirements</DialogTitle>
-//         </DialogHeader>
-//         <form onSubmit={handleSubmit} className="space-y-4">
-//           <Input name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required />
-//           <Input name="email" type="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required />
-//           <Input name="phone" type="tel" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required />
-//           <Textarea
-//             name="message"
-//             placeholder="Describe your requirements..."
-//             rows={4}
-//             value={formData.message}
-//             onChange={handleChange}
-//             required
-//           />
-//           <Button type="submit" className="w-full">Submit</Button>
-//         </form>
-//       </DialogContent>
-//     </Dialog>
-//   );
-// }
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -130,10 +56,11 @@ export default function DiscussRequirementsModal({
   }
 
   try {
-    const res = await fetch("http://127.0.0.1:3000/send-requirements", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const res = await fetch(`${API_BASE_URL}/send-requirements`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
     });
 
     const data = await res.json();
